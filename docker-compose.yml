@@ -1,0 +1,22 @@
+name: ${PROJECT_NAME}-postgresql
+
+services:
+  postgresql:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME}-postgresql
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ./volume/data:/var/lib/postgresql/data
+    networks:
+      - template_network
+
+networks:
+  template_network:
+    external: true
+    name: ${PROJECT_NAME}-network
